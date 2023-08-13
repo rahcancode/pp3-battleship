@@ -208,11 +208,6 @@ def check_for_game_over():
 
     game_over = num_of_ships_sunk == num_of_ships or bullets_left <= 0
 
-# Text image of a battleship
-f = open('battleship_art.tet', 'r')
-print(f.read())
-f.close()
-
 # Main entry point of the game
 def main():
     """Main entry point of the game"""
