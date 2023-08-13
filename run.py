@@ -53,6 +53,59 @@ ship_positions = [[]]
 # Global variable for alphabet
 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
+def validate_grid_and_place_ship(start_row, end_row, start_col, end_col):
+    """Safe to place ship check, based on row and column range"""
+    global grid
+    global ship_positions
+
+    all_valid = all(grid[r][c] == "." for r in range(start_row, end_row) for c in range(start_col, end_col))
+    if all_valid:
+        ship_positions.append([start_row, end_row, start_col, end_col])
+        for r in range(start_row, end_row):
+            for c in range(start_col, end_col):
+                grid[r][c] = "O"
+    return all_valid
+
+def try_to_place_ship_on_grid(row, col, direction, length):
+    """Attempt to place ship, based a specified direction and length"""
+    global grid_size
+
+    direction_to_coordinates = {
+        "left": (0, -1),
+        "right": (0, 1),
+        "up": (-1, 0),
+        "down": (1, 0)
+    }
+
+    row_change, col_change = direction_to_coordinates[direction]
+
+    start_row = max(0, row - (length - 1) * row_change)
+    end_row = min(grid_size, row + length * row_change)
+    start_col = max(0, col - (length - 1) * col_change)
+    end_col = min(grid_size, col + length * col_change)
+
+    return validate_grid_and_place_ship(start_row, end_row, start_col, end_col)
+
+def create_grid():
+    """Build grid, randomly place ships within it"""
+    global grid
+    global num_of_ships
+
+    random.seed(time.time())
+
+    grid = [["." for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
+
+    ship_positions = []
+
+    while len(ship_positions) != num_of_ships:
+        random_row = random.randint(0, GRID_SIZE - 1)
+        random_col = random.randint(0, GRID_SIZE - 1)
+        direction = random.choice(["left", "right", "up", "down"])
+        ship_size = random.randint(3, 5)
+        if try_to_place_ship_on_grid(random_row, random_col, direction, ship_size):
+            ship_positions.append((random_row, random_row + 1, random_col, random_col + 1))
+
+
 def main():
     """Opening the game"""
     print("-----Welcome to Battleship-----")
