@@ -274,6 +274,8 @@ def main():
         username = input("Enter your username: ").strip()
     
     print(f"Hello, {username}! You have {bullets_left} bullets to take down {num_of_ships} ships.")
+    print(f"Hit a ship twice or more to win the game. Run out of bullets and you lose")
+    print(f"X means a hit was successful. # means you just shot water, oh dear")
 
     create_grid()
 
