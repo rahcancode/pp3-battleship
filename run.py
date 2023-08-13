@@ -113,6 +113,20 @@ def create_grid():
         if is_valid_ship_placement(random_row, random_col, direction, ship_size):
             num_of_ships_placed += 1
 
+            # Place the ship on the grid
+            start_row, end_row, start_col, end_col = random_row, random_row + 1, random_col, random_col + 1
+            if direction == "left":
+                start_col = random_col - ship_size + 1
+            elif direction == "right":
+                end_col = random_col + ship_size
+            elif direction == "up":
+                start_row = random_row - ship_size + 1
+            elif direction == "down":
+                end_row = random_row + ship_size
+            for r in range(start_row, end_row):
+                for c in range(start_col, end_col):
+                    grid[r][c] = "S"
+
 
 def print_grid(game_over):
     """Print the grid with rows labeled A-J and columns labeled 0-9,
@@ -247,6 +261,7 @@ def main():
     """Main entry point of the application that runs the game loop."""
     global game_over
     global username
+
 
     print("-----Welcome to Battleships-----")
     username = input("Enter your username: ")
