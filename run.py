@@ -36,25 +36,42 @@ def validate_grid_and_place_ship(grid, ship_positions, start_row, end_row, start
 
 # ... (functions)
 
+# Global variable for grid
+grid = [[]]
+# Global variable for grid size
+grid_size = 10
+# Global variable for number of ships to place
+num_of_ships = 6
+# Global variable for bullets left
+bullets_left = 30
+# Global variable for game over
+game_over = False
+# Global variable for number of ships sunk
+num_of_ships_sunk = 0
+# Global variable for ship positions
+ship_positions = [[]]
+# Global variable for alphabet
+alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
 def main():
-    """Main entry point of the game"""
-    print("-----Welcome to Battleships-----")
-    print("You have {} bullets to take down {} ships. May the battle begin!".format(MAX_BULLETS, NUM_OF_SHIPS))
+    """Opening the game"""
+    print("-----Welcome to Battleship-----")
+    print("You have {} bullets to take down {} ships. Sink my battleship!".format(MAX_BULLETS, NUM_OF_SHIPS))
 
     grid = create_grid()
     ship_positions = []
 
     while True:
         print_grid(grid)
-        print("Number of ships remaining:", NUM_OF_SHIPS - num_of_ships_sunk)
-        print("Number of bullets left:", MAX_BULLETS - bullets_left)
+        print("Ships remaining:", NUM_OF_SHIPS - num_of_ships_sunk)
+        print("Bullets remaining:", MAX_BULLETS - bullets_left)
         
         if bullets_left <= 0:
-            print("Sorry, you lost! You ran out of bullets. Better luck next time!")
+            print("You ran out of bullets, you lose. Better luck next time!")
             break
 
         if num_of_ships_sunk == NUM_OF_SHIPS:
-            print("Congrats, you won!")
+            print("Gratz, you won!")
             break
 
         shoot_bullet(grid, ship_positions)
