@@ -87,7 +87,6 @@ def is_valid_ship_placement(row, col, direction, length):
 
     return True
 
-
 def create_grid():
     """Create a 10x10 grid and randomly place ships
     of varying sizes and directions."""
@@ -243,9 +242,8 @@ def shoot_bullet():
 
 def check_for_game_over():
     """Check if the game is over based on the conditions:
-        The player has hit a ship two or more times or has run out of bullets."""
+        The player has hit at least one ship two or more times."""
     global num_of_ships_sunk
-    global bullets_left
     global game_over
 
     if num_of_ships_sunk >= 1:
@@ -289,7 +287,7 @@ def main():
         num_of_ships_sunk = 0
         ship_positions = [[]]
 
-        print(f"Hello, {username}! You have {bullets_left} bullets to take down {num_of_ships} ships.")
+        print(f"Hello, {username}! You have {bullets_left} bullets to take down 1 of {num_of_ships} ships.")
 
         create_grid()
 
