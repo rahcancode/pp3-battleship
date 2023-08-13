@@ -1,18 +1,19 @@
 import random
 import time
+
 # Global variable for the player's username
 username = ""
 
 
 """
-    Battleships Game Overview:
+    Battleships Game Overview ¸.·´¯`·.´¯`·.¸¸.·´¯`·.¸><(((º>
 
-Grid Setup: A 10x10 grid is populated with 3 ships of varying lengths, placed randomly.
-Ammunition: You have 20 bullets to target and destroy the ships on the grid.
-Shooting: You can select a grid location using a row and column combination (e.g., C4) to fire a bullet.
-Outcome Display: Each shot's outcome (hit or miss) is displayed on the grid.
-Ship Orientation: Ships are not placed diagonally; if a shot hits, the ship extends in one of four directions: left, right, up, or down.
-Victory Condition: You win by uncovering all ship positions before running out of bullets/
+Grid Setup: A 10x10 grid holds 5 ships of varying lengths, placed randomly.
+Ammunition: Use 25 bullets to target and destroy ships on the grid.
+Shooting: Choose a grid location (e.g., C4) to fire a bullet.
+Outcome Display: Shots' outcomes (hit or miss) are shown on the grid.
+Ship Orientation: Ships don't place diagonally; a hit extends in 4 directions.
+Victory Condition: Uncover all ship positions before running out of bullets.
 
     Legend:
     1. "." = water or empty space
@@ -26,9 +27,9 @@ grid = [[]]
 # Global variable for grid size
 grid_size = 10
 # Global variable for number of ships to place
-num_of_ships = 3
+num_of_ships = 5
 # Global variable for bullets left
-bullets_left = 20
+bullets_left = 25
 # Global variable for game over
 game_over = False
 # Global variable for number of ships sunk
@@ -40,29 +41,36 @@ alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 
 def validate_grid_and_place_ship(start_row, end_row, start_col, end_col):
-    """Will check the row or column to see if it is safe to place a ship there"""
+    """
+    Checks if it is safe to place a ship in the specified range of rows and columns on the grid.
+    """
     global grid
     global ship_positions
 
+    # Step 1: Check if all cells in the specified range are empty (not occupied by another ship)
     all_valid = True
     for r in range(start_row, end_row):
         for c in range(start_col, end_col):
             if grid[r][c] != ".":
                 all_valid = False
                 break
+
+    # Step 2: If all cells are valid, update ship_positions and mark grid cells as occupied
     if all_valid:
         ship_positions.append([start_row, end_row, start_col, end_col])
         for r in range(start_row, end_row):
             for c in range(start_col, end_col):
                 grid[r][c] = "O"
+
+    # Return the result indicating whether the ship can be placed
     return all_valid
 
 
-def try_to_place_ship_on_grid(row, col, direction, length):
-    """Based on direction will call helper method to try and place a ship on the grid"""
+def is_valid_ship_placement(row, col, direction, length):
+    """Check if it's valid to place a ship on the grid in the given direction."""
     global grid_size
-
     start_row, end_row, start_col, end_col = row, row + 1, col, col + 1
+
     if direction == "left":
         if col - length < 0:
             return False
@@ -90,9 +98,9 @@ def try_to_place_ship_on_grid(row, col, direction, length):
 
     return True
 
+
 def create_grid():
-    """Will create a 10x10 grid and randomly place down ships
-       of different sizes in different directions"""
+    """Create a 10x10 grid and randomly place ships of varying sizes and directions."""
     global grid
     global grid_size
     global num_of_ships
@@ -102,36 +110,30 @@ def create_grid():
 
     rows, cols = (grid_size, grid_size)
 
-    grid = []
-    for r in range(rows):
-        row = []
-        for c in range(cols):
-            row.append(".")
-        grid.append(row)
+    grid = [["." for _ in range(cols)] for _ in range(rows)]
 
-    num_of_ships_placed = 0  # Initialize the variable
+    num_of_ships_placed = 0
 
-    ship_positions = [[]]
+    ship_positions = []
 
     while num_of_ships_placed != num_of_ships:
         random_row = random.randint(0, rows - 1)
         random_col = random.randint(0, cols - 1)
         direction = random.choice(["left", "right", "up", "down"])
         ship_size = random.randint(3, 5)
-        if try_to_place_ship_on_grid(random_row, random_col, direction, ship_size):
+        if is_valid_ship_placement(random_row, random_col, direction, ship_size):
             num_of_ships_placed += 1
 
-
-
 def print_grid(game_over):
-    """Will print the grid with rows A-J and columns 0-9, revealing hits, misses, and ships if the game is over"""
+    """Print the grid with rows labeled A-J and columns labeled 0-9, 
+    revealing game progress and ship positions if the game is over."""
     global grid
     global alphabet
 
     for row in range(len(grid)):
         print(alphabet[row], end=") ")
         for col in range(len(grid[row])):
-            if game_over or grid[row][col] == "X" or grid[row][col] == "#" or grid[row][col] == "O":
+            if game_over or grid[row][col] in ["X", "#", "O"]:
                 print(grid[row][col], end=" ")
             else:
                 print(".", end=" ")
@@ -143,7 +145,19 @@ def print_grid(game_over):
     print("")
 
 
+
 def get_valid_integer(prompt, min_value, max_value):
+    """
+    Get a valid integer input from the user within the specified range.
+
+    Args:
+        prompt (str): The prompt to display to the user.
+        min_value (int): The minimum allowed value.
+        max_value (int): The maximum allowed value.
+
+    Returns:
+        int: A valid integer within the specified range.
+    """
     while True:
         try:
             value = int(input(prompt))
@@ -156,27 +170,38 @@ def get_valid_integer(prompt, min_value, max_value):
 
 
 
+
 def accept_valid_bullet_placement():
-    """Will get valid row and column to place bullet shot"""
+    """
+    Get valid row and column coordinates for placing a bullet shot.
+
+    Returns:
+        tuple: A tuple containing the valid row and column coordinates.
+    """
     global alphabet
     global grid_size
 
     while True:
         placement = input("Enter row (A-J) and column (0-9) such as C4: ")
         placement = placement.upper()
+
+        # Validate input format
         if len(placement) != 2 or placement[0] not in alphabet or not placement[1].isdigit():
             print("Invalid input. Please enter a valid row (A-J) and column (0-9).")
             continue
         
+        # Extract row and column values from input
         row = alphabet.index(placement[0])
         col = int(placement[1])
         
+        # Validate row and column within grid boundaries
         if not (0 <= row < grid_size) or not (0 <= col < grid_size):
             print("Invalid input. Row and column values must be between A-J and 0-9.")
             continue
         
+        # Check if the chosen cell has already been shot
         if grid[row][col] == "#" or grid[row][col] == "X":
-            print("You have already shot a bullet here. Please pick somewhere else.")
+            print("You have already shot a bullet here. Choose again.")
             continue
         
         return row, col
@@ -184,8 +209,18 @@ def accept_valid_bullet_placement():
 
 
 
+
 def check_for_ship_sunk(row, col):
-    """If all parts of a ship have been shot it is sunk and we later increment ships sunk"""
+    """
+    Check if a ship has been completely sunk based on the given coordinates.
+
+    Args:
+        row (int): The row coordinate.
+        col (int): The column coordinate.
+
+    Returns:
+        bool: True if the ship is completely sunk, False otherwise.
+    """
     global ship_positions
     global grid
 
@@ -194,8 +229,10 @@ def check_for_ship_sunk(row, col):
         end_row = position[1]
         start_col = position[2]
         end_col = position[3]
+        
+        # Check if the provided coordinates are within the ship's bounds
         if start_row <= row <= end_row and start_col <= col <= end_col:
-            # Ship found, now check if its all sunk
+            # Ship found, now check if it's all sunk
             for r in range(start_row, end_row):
                 for c in range(start_col, end_col):
                     if grid[r][c] != "X":
@@ -203,22 +240,27 @@ def check_for_ship_sunk(row, col):
     return True
 
 
+
 def shoot_bullet():
-    """Updates grid and ships based on where the bullet was shot"""
+    """
+    Simulate shooting a bullet at a specified location on the grid,
+    and update the grid and ship status based on the shot's outcome.
+    """
     global grid
     global num_of_ships_sunk
     global bullets_left
 
+    # Get valid row and column coordinates for the bullet placement
     row, col = accept_valid_bullet_placement()
     print("")
     print("----------------------------")
 
     if grid[row][col] == ".":
         print("You missed, no ship was shot")
-        grid[row][col] = "#"
+        grid[row][col] = "#"  # Mark the cell as a miss
     elif grid[row][col] == "O":
         print("You hit!", end=" ")
-        grid[row][col] = "X"
+        grid[row][col] = "X"  # Mark the cell as a hit
         if check_for_ship_sunk(row, col):
             print("A ship was completely sunk!")
             num_of_ships_sunk += 1
@@ -228,8 +270,13 @@ def shoot_bullet():
     bullets_left -= 1
 
 
+
 def check_for_game_over():
-    """If all ships have been sunk or we run out of bullets its game over"""
+    """
+    Check if the game is over based on the conditions:
+    - All ships have been sunk
+    - The player has run out of bullets
+    """
     global num_of_ships_sunk
     global num_of_ships
     global bullets_left
@@ -239,8 +286,9 @@ def check_for_game_over():
         print("Congrats you won!")
         game_over = True
     elif bullets_left <= 0:
-        print("Sorry, you lost! You ran out of bullets, try again next time!")
+        print("Sorry, you lose, try again next time!")
         game_over = True
+
 
 # Text image of a battleship	
 f = open('battleship_art.txt', 'r')	
@@ -248,26 +296,41 @@ print(f.read())
 f.close()
 
 def main():
-    """Main entry point of application that runs the game loop"""
+    """
+    Main entry point of the application that runs the game loop.
+    Manages the game flow, user interaction, and displays game status.
+    """
     global game_over
     global username
 
+    # Display the welcome message and prompt for the username
     print("-----Welcome to Battleships-----")
-    username = input("Enter your username: ")  # Prompt for username
-    print(f"Hello, {username}! You have 50 bullets to take down 8 ships. May the battle begin!")
+    username = input("Enter your username: ")
 
+    # Display the introductory message with remaining bullets and ship count
+    print(f"Hello, {username}! You have {bullets_left} bullets to take down {num_of_ships} ships.")
+
+    # Initialize the grid and ship positions
     create_grid()
 
+    # Main game loop
     while not game_over:
+        # Display the current game state
         print_grid(False)
         print("Number of ships remaining:", num_of_ships - num_of_ships_sunk)
         print("Number of bullets left:", bullets_left)
+
+        # Shoot a bullet and update the game state
         shoot_bullet()
+
         print("----------------------------")
         print("")
+
+        # Check if the game is over
         check_for_game_over()
 
-    print(f"Game over, {username}!")
+    # Display the game over message and the final grid
+    print(f"Game over X_x, {username}!")
     print_grid(True)
 
 if __name__ == '__main__':
