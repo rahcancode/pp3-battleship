@@ -7,15 +7,15 @@ username = ""
 """
     Battleships Game Overview:
 
-Grid Setup: A 10x10 grid is populated with 2 ships of varying lengths, placed randomly.
-Ammunition: You have 15 bullets to target and destroy the ships on the grid.
+Grid Setup: A 10x10 grid is populated with 3 ships of varying lengths, placed randomly.
+Ammunition: You have 20 bullets to target and destroy the ships on the grid.
 Shooting: You can select a grid location using a row and column combination (e.g., C4) to fire a bullet.
 Outcome Display: Each shot's outcome (hit or miss) is displayed on the grid.
 Ship Orientation: Ships are not placed diagonally; if a shot hits, the ship extends in one of four directions: left, right, up, or down.
-Victory Condition: You win by uncovering all ship positions before running out of bullets; otherwise, you lose.
+Victory Condition: You win by uncovering all ship positions before running out of bullets/
 
     Legend:
-    1. "~" = water or empty space
+    1. "." = water or empty space
     2. "S" = part of ship
     3. "X" = part of ship that was hit with bullet
     4. "#" = water that was shot with bullet, a miss because it hit no ship
@@ -26,9 +26,9 @@ grid = [[]]
 # Global variable for grid size
 grid_size = 10
 # Global variable for number of ships to place
-num_of_ships = 2
+num_of_ships = 3
 # Global variable for bullets left
-bullets_left = 15
+bullets_left = 20
 # Global variable for game over
 game_over = False
 # Global variable for number of ships sunk
@@ -233,6 +233,10 @@ def check_for_game_over():
         print("Sorry, you lost! You ran out of bullets, try again next time!")
         game_over = True
 
+# Text image of a battleship	
+f = open('battleship_art.txt', 'r')	
+print(f.read())	
+f.close()
 
 def main():
     """Main entry point of application that runs the game loop"""
@@ -241,7 +245,7 @@ def main():
 
     print("-----Welcome to Battleships-----")
     username = input("Enter your username: ")  # Prompt for username
-    print(f"Hello, {username}! You have 50 bullets to take down 8 ships. May the battle begin!")
+    print(f"Hello, {username}! You have 20 bullets to take down 3 ships. May the battle begin!")
 
     create_grid()
 
