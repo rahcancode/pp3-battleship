@@ -189,6 +189,18 @@ def shoot_bullet():
 
     bullets_left -= 1
 
+def check_for_game_over():
+    """Check if the game is over"""
+    global num_of_ships_sunk
+    global bullets_left
+    global game_over
+
+    if num_of_ships_sunk == num_of_ships:
+        print("Gratz, you won!")
+    elif bullets_left <= 0:
+        print("Sorry, you lost! Try again next time?")
+
+    game_over = num_of_ships_sunk == num_of_ships or bullets_left <= 0
 
 def main():
     """Opening the game"""
