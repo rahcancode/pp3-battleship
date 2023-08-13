@@ -4,9 +4,9 @@ import time
 """
     Battleships Game Overview:
 
-Grid Setup: A 10x10 grid is populated with 6 ships of varying lengths, placed randomly.
-Ammunition: You have 30 bullets to target and destroy the ships on the grid.
-Shooting: You can select a grid location using a row and column combination (e.g., A3) to fire a bullet.
+Grid Setup: A 10x10 grid is populated with 2 ships of varying lengths, placed randomly.
+Ammunition: You have 15 bullets to target and destroy the ships on the grid.
+Shooting: You can select a grid location using a row and column combination (e.g., C4) to fire a bullet.
 Outcome Display: Each shot's outcome (hit or miss) is displayed on the grid.
 Ship Orientation: Ships are not placed diagonally; if a shot hits, the ship extends in one of four directions: left, right, up, or down.
 Victory Condition: You win by uncovering all ship positions before running out of bullets; otherwise, you lose.
@@ -25,7 +25,7 @@ grid_size = 10
 # Global variable for number of ships to place
 num_of_ships = 2
 # Global variable for bullets left
-bullets_left = 50
+bullets_left = 15
 # Global variable for game over
 game_over = False
 # Global variable for number of ships sunk
@@ -80,7 +80,12 @@ def try_to_place_ship_on_grid(row, col, direction, length):
             return False
         end_row = row + length
 
-    return validate_grid_and_place_ship(start_row, end_row, start_col, end_col)
+    for r in range(start_row, end_row):
+        for c in range(start_col, end_col):
+            if grid[r][c] != ".":
+                return False
+
+    return True
 
 
 def create_grid():
@@ -117,30 +122,24 @@ def create_grid():
 
 
 def print_grid():
-    """Will print the grid with rows A-J and columns 0-9"""
+    """Will print the grid with rows A-J and columns 0-9, only revealing hits and misses"""
     global grid
     global alphabet
-
-    debug_mode = True
-
-    alphabet = alphabet[0: len(grid) + 1]
 
     for row in range(len(grid)):
         print(alphabet[row], end=") ")
         for col in range(len(grid[row])):
-            if grid[row][col] == "O":
-                if debug_mode:
-                    print("O", end=" ")
-                else:
-                    print(".", end=" ")
-            else:
+            if grid[row][col] == "X" or grid[row][col] == "#":
                 print(grid[row][col], end=" ")
+            else:
+                print(".", end=" ")
         print("")
 
     print("  ", end=" ")
     for i in range(len(grid[0])):
         print(str(i), end=" ")
     print("")
+
 
 
 def accept_valid_bullet_placement():
@@ -155,7 +154,7 @@ def accept_valid_bullet_placement():
         placement = input("Enter row (A-J) and column (0-9) such as A3: ")
         placement = placement.upper()
         if len(placement) != 2 or placement[0] not in alphabet or not placement[1].isdigit():
-            print("Error: Please enter a valid row (A-J) and column (0-9) such as A3")
+            print("Error: Please enter a valid row (A-J) and column (0-9) such as C4")
             continue
         row = alphabet.index(placement[0])
         col = int(placement[1])
@@ -173,7 +172,7 @@ def accept_valid_bullet_placement():
 
 
 def check_for_ship_sunk(row, col):
-    """If all parts of a shit have been shot it is sunk and we later increment ships sunk"""
+    """If all parts of a ship have been shot it is sunk and we later increment ships sunk"""
     global ship_positions
     global grid
 
@@ -236,7 +235,7 @@ def main():
     global game_over
 
     print("-----Welcome to Battleships-----")
-    print("You have 50 bullets to take down 8 ships, may the battle begin!")
+    print("You have 15 bullets to take down 2 ships, may the battle begin!")
 
     create_grid()
 
