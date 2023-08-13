@@ -14,7 +14,7 @@ import time
     1. "~" = water or empty space
     2. "0" = part of ship
     3. "X" = part of ship that was hit with bullet
-    4. "#" = a miss, only water was shot
+    4. "#" = a miss, only water was hit
 """
 import random
 import time
@@ -27,7 +27,7 @@ ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 # Function to check if it's safe to place a ship on the grid and update the grid accordingly
 def validate_grid_and_place_ship(grid, ship_positions, start_row, end_row, start_col, end_col):
-    """Check if it's safe to place a ship on the grid and update the grid accordingly"""
+    """Validate ship placement and update the grid"""
     all_valid = all(grid[r][c] == "." for r in range(start_row, end_row) for c in range(start_col, end_col))
     if all_valid:
         ship_positions.append((start_row, end_row, start_col, end_col))
@@ -171,7 +171,7 @@ def check_for_ship_sunk(row, col):
     return False
 
 def shoot_bullet():
-    """Update grid and ships based on where the bullet was shot"""
+    """Modify grid and ships according to bullet hit"""
     global grid
     global num_of_ships_sunk
     global bullets_left
@@ -209,6 +209,11 @@ def check_for_game_over():
 
     game_over = num_of_ships_sunk == num_of_ships or bullets_left <= 0
 
+# Text image of a battleship
+f = open('battleship_art.tet', 'r')
+print(f.read())
+f.close()
+
 # Main entry point of the game
 def main():
     """Main entry point of the game"""
@@ -243,7 +248,3 @@ def main():
         num_of_ships_sunk = 0
         bullets_left = 30
         game_over = False
-
-
-# Text image of a battleship
-f = open('battleship_art.txt', 'r')
