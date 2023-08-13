@@ -208,16 +208,21 @@ def check_for_game_over():
 
     game_over = num_of_ships_sunk == num_of_ships or bullets_left <= 0
 
-# Main entry point of the game
 def main():
     """Main entry point of the game"""
+    global game_over
+
     print("-----Welcome to Battleships-----")
     player_name = input("Enter your name: ").strip()
 
     while True:
         print(f"Hello, {player_name}! You have {MAX_BULLETS} bullets to take down {NUM_OF_SHIPS} ships. May the battle begin!")
 
-        # initialize_game()
+        # Initialize game variables for a new game
+        grid = [["." for _ in range(grid_size)] for _ in range(grid_size)]
+        num_of_ships_sunk = 0
+        bullets_left = MAX_BULLETS
+        game_over = False
 
         while not game_over:
             play_round(player_name)
@@ -225,11 +230,6 @@ def main():
         while True:
             restart = input(f"Do you want to play again, {player_name}? (yes/no): ").strip().lower()
             if restart == "yes":
-                # Reset game variables for a new game
-                grid = [["." for _ in range(grid_size)] for _ in range(grid_size)]
-                num_of_ships_sunk = 0
-                bullets_left = 30
-                game_over = False
                 break
             elif restart == "no":
                 print(f"Thank you for playing Battleships, {player_name}!")
@@ -240,3 +240,4 @@ def main():
 # Call the main function
 if __name__ == "__main__":
     main()
+
