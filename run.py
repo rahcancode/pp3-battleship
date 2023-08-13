@@ -208,6 +208,7 @@ def main():
             print("Number of bullets left:", bullets_left)
 
             # Shoot a bullet and update game state
+            if not game_over:
             row, col = accept_valid_bullet_placement()
             print("\n----------------------------")
             cell = grid[row][col]
@@ -237,30 +238,40 @@ def main():
 
 # Function to get valid row and column for bullet placement
 def accept_valid_bullet_placement():
-    """Get valid row and column to place bullet shot"""
+    """Will get valid row and column to place bullet shot"""
     global alphabet
     global grid
 
-    while True:
-        placement = input("Enter row (A-J) and column (0-9) such as C4: ")
-        placement = placement.strip().upper()
-
-        if len(placement) != 2 or not placement[0].isalpha() or not placement[1].isdigit():
-            print("Error: Please enter a valid row and column such as C4")
+    is_valid_placement = False
+    row = -1
+    col = -1
+    while is_valid_placement is False:
+        placement = input("Enter row (A-J) and column (0-9) such as A3: ")
+        placement = placement.upper()
+        if len(placement) <= 0 or len(placement) > 2:
+            print("Error: Please enter only one row and column such as A3")
             continue
-
-        row = alphabet.find(placement[0])
-        col = int(placement[1])
-
-        if row < 0 or row >= grid_size or col < 0 or col >= grid_size:
-            print("Error: Please enter valid coordinates (A-J) for row and (0-9) for column")
+        row = placement[0]
+        col = placement[1]
+        if not row.isalpha() or not col.isnumeric():
+            print("Error: Please enter letter (A-J) for row and (0-9) for column")
             continue
-
-        if grid[row][col] in {"#", "X"}:
-            print("You have already shot a bullet here, please try again")
+        row = alphabet.find(row)
+        if not (-1 < row < grid_size):
+            print("Error: Please enter letter (A-J) for row and (0-9) for column")
             continue
+        col = int(col)
+        if not (-1 < col < grid_size):
+            print("Error: Please enter letter (A-J) for row and (0-9) for column")
+            continue
+        if grid[row][col] == "#" or grid[row][col] == "X":
+            print("You have already shot a bullet here, pick somewhere else")
+            continue
+        if grid[row][col] == "." or grid[row][col] == "O":
+            is_valid_placement = True
 
-        return row, col
+    return row, col
+
 
 # Call the main function
 if __name__ == "__main__":
