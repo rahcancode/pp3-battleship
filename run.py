@@ -19,11 +19,13 @@ import time
 import random
 import time
 
+# Global constants
 GRID_SIZE = 10
 NUM_OF_SHIPS = 6
 MAX_BULLETS = 30
 ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
+# Function to check if it's safe to place a ship on the grid and update the grid accordingly
 def validate_grid_and_place_ship(grid, ship_positions, start_row, end_row, start_col, end_col):
     """Check if it's safe to place a ship on the grid and update the grid accordingly"""
     all_valid = all(grid[r][c] == "." for r in range(start_row, end_row) for c in range(start_col, end_col))
@@ -34,7 +36,6 @@ def validate_grid_and_place_ship(grid, ship_positions, start_row, end_row, start
                 grid[r][c] = "O"
     return all_valid
 
-# ... (functions)
 
 # Global variable for grid
 grid = [[]]
@@ -53,6 +54,7 @@ ship_positions = [[]]
 # Global variable for alphabet
 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
+# Functions to validate ship on grid placement
 def validate_grid_and_place_ship(start_row, end_row, start_col, end_col):
     """Safe to place ship check, based on row and column range"""
     global grid
@@ -86,6 +88,8 @@ def try_to_place_ship_on_grid(row, col, direction, length):
 
     return validate_grid_and_place_ship(start_row, end_row, start_col, end_col)
 
+
+# Functions to create and print the grid
 def create_grid():
     """Build grid, randomly place ships within it"""
     global grid
@@ -126,6 +130,8 @@ def print_grid():
                 print(cell, end=" ")
         print("\n")
 
+
+# Functions for valid game play. Shooting bullets and if they are hits or misses
 def accept_valid_bullet_placement():
     """Get valid row and column to place bullet shot"""
     global alphabet
@@ -189,6 +195,7 @@ def shoot_bullet():
 
     bullets_left -= 1
 
+# Function for game over check
 def check_for_game_over():
     """Check if the game is over"""
     global num_of_ships_sunk
@@ -202,6 +209,7 @@ def check_for_game_over():
 
     game_over = num_of_ships_sunk == num_of_ships or bullets_left <= 0
 
+# Main entry point of the game
 def main():
     """Main entry point of the game"""
     global game_over
@@ -233,7 +241,6 @@ def main():
         num_of_ships_sunk = 0
         bullets_left = 30
         game_over = False
-
 
 
 # Text image of a battleship
