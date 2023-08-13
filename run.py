@@ -4,7 +4,7 @@ import time
 """
     -------BATTLESHIP-------
     How it will work:
-    1. A 10x10 grid will have 6 ships of variable length placed randomly
+    1. A 10x10 grid will have 2 ships of variable length placed randomly
     2. You have 30 bullets to take down the ships that are placed
     3. Choose a row and column to shoot your shot
     4. Every shot will show up in the grid, hit or miss
@@ -21,7 +21,7 @@ import time
 
 # Global constants
 GRID_SIZE = 10
-NUM_OF_SHIPS = 6
+NUM_OF_SHIPS = 2
 MAX_BULLETS = 30
 ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -42,7 +42,7 @@ grid = [[]]
 # Global variable for grid size
 grid_size = 10
 # Global variable for number of ships to place
-num_of_ships = 6
+num_of_ships = 2
 # Global variable for bullets left
 bullets_left = 30
 # Global variable for game over
@@ -212,15 +212,16 @@ def check_for_game_over():
 # Main entry point of the game
 def main():
     """Main entry point of the game"""
-    global game_over
-
     print("-----Welcome to Battleships-----")
     player_name = input("Enter your name: ").strip()
-    
-    while True:
-        print(f"Hello, {player_name}! You have 30 bullets to take down 6 ships. May the battle begin!")
 
-        create_grid()
+    while True:
+        print(f"Hello, {player_name}! You have 30 bullets to take down 2 ships. May the battle begin!")
+
+        grid = [["." for _ in range(grid_size)] for _ in range(grid_size)]
+        num_of_ships_sunk = 0
+        bullets_left = 30
+        game_over = False
 
         while not game_over:
             print_grid()
@@ -231,10 +232,11 @@ def main():
             print("")
             check_for_game_over()
 
-        restart = input("Do you want to play again, {player_name}? (yes/no): ").strip().lower()
+        restart = input(f"Do you want to play again, {player_name}? (yes/no): ").strip().lower()
         if restart != "yes":
             print(f"Thank you for playing Battleships, {player_name}!")
             break
+
 
         # Reset game variables for a new game
         grid = [["." for _ in range(grid_size)] for _ in range(grid_size)]
