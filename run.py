@@ -203,32 +203,35 @@ def check_for_game_over():
     game_over = num_of_ships_sunk == num_of_ships or bullets_left <= 0
 
 def main():
-    """Opening the game"""
-    print("-----Welcome to Battleship-----")
-    print("You have {} bullets to take down {} ships. Sink my battleship!".format(MAX_BULLETS, NUM_OF_SHIPS))
-
-    grid = create_grid()
-    ship_positions = []
+    """Main entry point of the game"""
+    global game_over
 
     while True:
-        print_grid(grid)
-        print("Ships remaining:", NUM_OF_SHIPS - num_of_ships_sunk)
-        print("Bullets remaining:", MAX_BULLETS - bullets_left)
-        
-        if bullets_left <= 0:
-            print("You ran out of bullets, you lose. Better luck next time!")
+        print("-----Welcome to Battleships-----")
+        print("You have 30 bullets to take down 6 ships. Let's sink some Battleships!")
+
+        create_grid()
+
+        while not game_over:
+            print_grid()
+            print("Number of ships remaining:", num_of_ships - num_of_ships_sunk)
+            print("Number of bullets left:", bullets_left)
+            shoot_bullet()
+            print("----------------------------")
+            print("")
+            check_for_game_over()
+
+        restart = input("Do you want to play again? (yes/no): ").strip().lower()
+        if restart != "yes":
+            print("Thank you for playing Battleships!")
             break
 
-        if num_of_ships_sunk == NUM_OF_SHIPS:
-            print("Gratz, you won!")
-            break
+        # Reset game variables for a new game
+        grid = [["." for _ in range(grid_size)] for _ in range(grid_size)]
+        num_of_ships_sunk = 0
+        bullets_left = 50
+        game_over = False
 
-        shoot_bullet(grid, ship_positions)
-        print("----------------------------")
-        print("")
-
-if __name__ == '__main__':
-    main()
 
 # Text image of a battleship
 f = open('battleship_art.txt', 'r')
