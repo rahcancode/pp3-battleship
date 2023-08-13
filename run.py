@@ -139,7 +139,7 @@ def accept_valid_bullet_placement():
 
     while True:
         placement = input("Enter row (A-J) and column (0-9) such as C4: ")
-        placement = placement.upper()
+        placement = placement.strip().upper()
 
         if len(placement) != 2 or not placement[0].isalpha() or not placement[1].isdigit():
             print("Error: Please enter a valid row and column such as C4")
@@ -156,8 +156,7 @@ def accept_valid_bullet_placement():
             print("You have already shot a bullet here, please try again")
             continue
 
-        if grid[row][col] in {".", "O"}:
-            return row, col
+        return row, col
 
 def check_for_ship_sunk(row, col):
     """Check if a ship has been sunk"""
@@ -221,30 +220,28 @@ def main():
     player_name = input("Enter your name: ").strip()
 
     while True:
-        print(f"Hello, {player_name}! You have 30 bullets to take down 2 ships. May the battle begin!")
+        print(f"Hello, {player_name}! You have {MAX_BULLETS} bullets to take down {NUM_OF_SHIPS} ships. May the battle begin!")
 
-        grid = [["." for _ in range(grid_size)] for _ in range(grid_size)]
-        num_of_ships_sunk = 0
-        bullets_left = 30
-        game_over = False
+        initialize_game()
 
         while not game_over:
-            print_grid()
-            print("Number of ships remaining:", num_of_ships - num_of_ships_sunk)
-            print("Number of bullets left:", bullets_left)
-            shoot_bullet()
-            print("----------------------------")
-            print("")
-            check_for_game_over()
+            play_round(player_name)
 
-        restart = input(f"Do you want to play again, {player_name}? (yes/no): ").strip().lower()
-        if restart != "yes":
-            print(f"Thank you for playing Battleships, {player_name}!")
-            break
+        while True:
+            restart = input(f"Do you want to play again, {player_name}? (yes/no): ").strip().lower()
+            if restart == "yes":
+                # Reset game variables for a new game
+                grid = [["." for _ in range(grid_size)] for _ in range(grid_size)]
+                num_of_ships_sunk = 0
+                bullets_left = 30
+                game_over = False
+                break
+            elif restart == "no":
+                print(f"Thank you for playing Battleships, {player_name}!")
+                return
+            else:
+                print("Invalid input. Please enter 'yes' or 'no'.")
 
-
-        # Reset game variables for a new game
-        grid = [["." for _ in range(grid_size)] for _ in range(grid_size)]
-        num_of_ships_sunk = 0
-        bullets_left = 30
-        game_over = False
+# Call the main function
+if __name__ == "__main__":
+    main()
