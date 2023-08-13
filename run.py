@@ -19,12 +19,6 @@ import time
 import random
 import time
 
-# # Global constants
-# GRID_SIZE = 10
-# NUM_OF_SHIPS = 2
-# MAX_BULLETS = 30
-# ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
 # Function to check if it's safe to place a ship on the grid and update the grid accordingly
 def validate_grid_and_place_ship(grid, ship_positions, start_row, end_row, start_col, end_col):
     """Validate ship placement and update the grid"""
@@ -224,6 +218,13 @@ print(f.read())
 f.close()
 
 def main():
+
+# Global constants
+grid_size = 10
+num_of_ships = 2
+bullets_left = 30
+alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
     """Main entry point of the game"""
     global game_over
 
