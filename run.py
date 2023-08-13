@@ -134,7 +134,6 @@ def print_grid():
 # Functions for valid game play. Shooting bullets and if they are hits or misses
 def accept_valid_bullet_placement():
     """Get valid row and column to place bullet shot"""
-    global alphabet
     global grid
 
     while True:
@@ -145,7 +144,7 @@ def accept_valid_bullet_placement():
             print("Error: Please enter a valid row and column such as C4")
             continue
 
-        row = alphabet.find(placement[0])
+        row = ord(placement[0]) - ord('A')
         col = int(placement[1])
 
         if row < 0 or row >= grid_size or col < 0 or col >= grid_size:
@@ -157,6 +156,7 @@ def accept_valid_bullet_placement():
             continue
 
         return row, col
+
 
 def check_for_ship_sunk(row, col):
     """Check if a ship has been sunk"""
