@@ -221,10 +221,10 @@ def shoot_bullet():
     print("----------------------------")
 
     if grid[row][col] == ".":
-    print("You missed, no ship was shot")
+        print("You missed, no ship was shot")
     grid[row][col] = "#"
-    elif grid[row][col] == "S":  
-    print("You hit!", end=" ")
+    elif grid[row][col] == "S":
+        print("You hit!", end=" ")
     grid[row][col] = "X"
     if check_for_ship_sunk(row, col):
         print("A ship was completely sunk!")
@@ -233,7 +233,7 @@ def shoot_bullet():
         print("A ship was shot")
 
     bullets_left -= 1
-
+    
 
 def check_for_game_over():
     """Check if the game is over based on the conditions:
