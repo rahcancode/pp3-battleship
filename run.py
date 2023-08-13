@@ -208,6 +208,7 @@ def check_for_game_over():
     global num_of_ships_sunk
     global bullets_left
     global game_over
+
     if num_of_ships_sunk == num_of_ships:
         print("Gratz, you won!")
     elif bullets_left <= 0:
@@ -246,9 +247,9 @@ def main():
 
             # Shoot a bullet and update game state
             if not game_over:
-            row, col = accept_valid_bullet_placement()
-            print("\n----------------------------")
-            cell = grid[row][col]
+                row, col = accept_valid_bullet_placement()
+                print("\n----------------------------")
+                cell = grid[row][col]
             if cell == ".":
                 print("You missed, no hit")
                 grid[row][col] = "#"
