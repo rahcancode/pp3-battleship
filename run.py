@@ -137,7 +137,7 @@ def print_grid(game_over):
     for row in range(len(grid)):
         print(alphabet[row], end=") ")
         for col in range(len(grid[row])):
-            if game_over or grid[row][col] in ["X", "#", "O"]:
+            if game_over or grid[row][col] in ["X", "#"]:
                 print(grid[row][col], end=" ")
             else:
                 print(".", end=" ")
@@ -222,10 +222,10 @@ def shoot_bullet():
 
     if grid[row][col] == ".":
         print("You missed, no ship was shot")
-        grid[row][col] = "#"  # Fix the indentation here
+        grid[row][col] = "#"
     elif grid[row][col] == "O":
         print("You hit!", end=" ")
-        grid[row][col] = "X"  # Fix the indentation here
+        grid[row][col] = "X"
         if check_for_ship_sunk(row, col):
             print("A ship was completely sunk!")
             num_of_ships_sunk += 1
