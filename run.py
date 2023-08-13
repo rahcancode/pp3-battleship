@@ -90,7 +90,6 @@ def try_to_place_ship_on_grid(row, col, direction, length):
 
     return True
 
-
 def create_grid():
     """Will create a 10x10 grid and randomly place down ships
        of different sizes in different directions"""
@@ -109,10 +108,6 @@ def create_grid():
         for c in range(cols):
             row.append(".")
         grid.append(row)
-
-    num_of_ships_placed = 0
-
-    ship_positions = []
 
     while num_of_ships_placed != num_of_ships:
         random_row = random.randint(0, rows - 1)
@@ -144,34 +139,44 @@ def print_grid(game_over):
     print("")
 
 
+def get_valid_integer(prompt, min_value, max_value):
+    while True:
+        try:
+            value = int(input(prompt))
+            if min_value <= value <= max_value:
+                return value
+            else:
+                print(f"Please enter a value between {min_value} and {max_value}.")
+        except ValueError:
+            print("Invalid input. Please enter a valid integer.")
+
 
 
 def accept_valid_bullet_placement():
     """Will get valid row and column to place bullet shot"""
     global alphabet
-    global grid
+    global grid_size
 
-    is_valid_placement = False
-    row = -1
-    col = -1
-    while not is_valid_placement:
-        placement = input("Enter row (A-J) and column (0-9) such as A3: ")
+    while True:
+        placement = input("Enter row (A-J) and column (0-9) such as C4: ")
         placement = placement.upper()
         if len(placement) != 2 or placement[0] not in alphabet or not placement[1].isdigit():
-            print("Error: Please enter a valid row (A-J) and column (0-9) such as C4")
+            print("Invalid input. Please enter a valid row (A-J) and column (0-9).")
             continue
+        
         row = alphabet.index(placement[0])
         col = int(placement[1])
+        
         if not (0 <= row < grid_size) or not (0 <= col < grid_size):
-            print("Error: Row and column values must be between A-J and 0-9")
+            print("Invalid input. Row and column values must be between A-J and 0-9.")
             continue
+        
         if grid[row][col] == "#" or grid[row][col] == "X":
-            print("You have already shot a bullet here, pick somewhere else")
+            print("You have already shot a bullet here. Please pick somewhere else.")
             continue
-        if grid[row][col] == "." or grid[row][col] == "O":
-            is_valid_placement = True
+        
+        return row, col
 
-    return row, col
 
 
 
@@ -247,10 +252,14 @@ def main():
     username = input("Enter your username: ")  # Prompt for username
     print(f"Hello, {username}! You have 20 bullets to take down 3 ships. May the battle begin!")
 
+    # Get valid number of ships
+    global num_of_ships
+    num_of_ships = get_valid_integer("Enter the number of ships to place (1-86): ", 1, 86)
+
     create_grid()
 
     while not game_over:
-        print_grid(False)
+        print_grid(game_over)  # Pass game_over to the print_grid function
         print("Number of ships remaining:", num_of_ships - num_of_ships_sunk)
         print("Number of bullets left:", bullets_left)
         shoot_bullet()
@@ -259,7 +268,7 @@ def main():
         check_for_game_over()
 
     print(f"Game over, {username}!")
-    print_grid(True)
+    print_grid(True)  # Pass True to indicate the game is over
 
 if __name__ == '__main__':
     main()
