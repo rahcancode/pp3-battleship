@@ -105,6 +105,90 @@ def create_grid():
         if try_to_place_ship_on_grid(random_row, random_col, direction, ship_size):
             ship_positions.append((random_row, random_row + 1, random_col, random_col + 1))
 
+def print_grid():
+    """Print the grid with rows A-J and columns 0-9"""
+    global grid
+    global alphabet
+
+    debug_mode = True
+
+    print("   ", end="")
+    for i in range(len(grid[0])):
+        print(f"{i:<2}", end="")
+    print("\n")
+
+    for row_index, row in enumerate(grid):
+        print(f"{alphabet[row_index]:<2}", end=") ")
+        for cell in row:
+            if cell == "O":
+                print("O", end=" ") if debug_mode else print(".", end=" ")
+            else:
+                print(cell, end=" ")
+        print("\n")
+
+def accept_valid_bullet_placement():
+    """Get valid row and column to place bullet shot"""
+    global alphabet
+    global grid
+
+    while True:
+        placement = input("Enter row (A-J) and column (0-9) such as C4: ")
+        placement = placement.upper()
+
+        if len(placement) != 2 or not placement[0].isalpha() or not placement[1].isdigit():
+            print("Error: Please enter a valid row and column such as C4")
+            continue
+
+        row = alphabet.find(placement[0])
+        col = int(placement[1])
+
+        if row < 0 or row >= grid_size or col < 0 or col >= grid_size:
+            print("Error: Please enter valid coordinates (A-J) for row and (0-9) for column")
+            continue
+
+        if grid[row][col] in {"#", "X"}:
+            print("You have already shot a bullet here, please try again")
+            continue
+
+        if grid[row][col] in {".", "O"}:
+            return row, col
+
+def check_for_ship_sunk(row, col):
+    """Check if a ship has been sunk"""
+    global ship_positions
+    global grid
+
+    for start_row, end_row, start_col, end_col in ship_positions:
+        if start_row <= row <= end_row and start_col <= col <= end_col:
+            if all(grid[r][c] == "X" for r in range(start_row, end_row) for c in range(start_col, end_col)):
+                return True
+    return False
+
+def shoot_bullet():
+    """Update grid and ships based on where the bullet was shot"""
+    global grid
+    global num_of_ships_sunk
+    global bullets_left
+
+    row, col = accept_valid_bullet_placement()
+
+    print("\n----------------------------")
+
+    cell = grid[row][col]
+    if cell == ".":
+        print("You missed, no hit")
+        grid[row][col] = "#"
+    elif cell == "O":
+        print("You hit!", end=" ")
+        grid[row][col] = "X"
+        if check_for_ship_sunk(row, col):
+            print("You sunk a battleship!")
+            num_of_ships_sunk += 1
+        else:
+            print("Shots fired!")
+
+    bullets_left -= 1
+
 
 def main():
     """Opening the game"""
