@@ -25,7 +25,7 @@ Victory Condition: Uncover all ship positions before running out of bullets.
 grid = [[]]
 grid_size = 10
 num_of_ships = 5
-bullets_left = 25
+bullets_left = 100
 game_over = False
 num_of_ships_sunk = 0
 ship_positions = [[]]
