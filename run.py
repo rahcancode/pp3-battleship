@@ -130,34 +130,6 @@ def print_grid():
                 print(cell, end=" ")
         print("\n")
 
-
-# Functions for valid game play. Shooting bullets and if they are hits or misses
-def accept_valid_bullet_placement():
-    """Get valid row and column to place bullet shot"""
-    global grid
-
-    while True:
-        placement = input("Enter row (A-J) and column (0-9) such as C4: ")
-        placement = placement.strip().upper()
-
-        if len(placement) != 2 or not placement[0].isalpha() or not placement[1].isdigit():
-            print("Error: Please enter a valid row and column such as C4")
-            continue
-
-        row = ord(placement[0]) - ord('A')
-        col = int(placement[1])
-
-        if row < 0 or row >= grid_size or col < 0 or col >= grid_size:
-            print("Error: Please enter valid coordinates (A-J) for row and (0-9) for column")
-            continue
-
-        if grid[row][col] in {"#", "X"}:
-            print("You have already shot a bullet here, please try again")
-            continue
-
-        return row, col
-
-
 def check_for_ship_sunk(row, col):
     """Check if a ship has been sunk"""
     global ship_positions
@@ -263,7 +235,33 @@ def main():
             else:
                 print("Invalid input. Please enter 'yes' or 'no'.")
 
+# Function to get valid row and column for bullet placement
+def accept_valid_bullet_placement():
+    """Get valid row and column to place bullet shot"""
+    global alphabet
+    global grid
+
+    while True:
+        placement = input("Enter row (A-J) and column (0-9) such as C4: ")
+        placement = placement.strip().upper()
+
+        if len(placement) != 2 or not placement[0].isalpha() or not placement[1].isdigit():
+            print("Error: Please enter a valid row and column such as C4")
+            continue
+
+        row = alphabet.find(placement[0])
+        col = int(placement[1])
+
+        if row < 0 or row >= grid_size or col < 0 or col >= grid_size:
+            print("Error: Please enter valid coordinates (A-J) for row and (0-9) for column")
+            continue
+
+        if grid[row][col] in {"#", "X"}:
+            print("You have already shot a bullet here, please try again")
+            continue
+
+        return row, col
+
 # Call the main function
 if __name__ == "__main__":
     main()
-
