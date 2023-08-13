@@ -227,7 +227,7 @@ def shoot_bullet():
         print("You missed, no ship was shot")
         grid[row][col] = "#"
     elif grid[row][col] == "O":
-        print("You hit!", end=" ")
+        print("You got a hit!")
         grid[row][col] = "X"
         ship_sunk = check_for_ship_sunk(row, col)
         if ship_sunk:
@@ -272,10 +272,10 @@ def main():
 
     while not username:
         username = input("Enter your username: ").strip()
-    
+
     print(f"Hello, {username}! You have {bullets_left} bullets to take down {num_of_ships} ships.")
-    print(f"Hit a ship twice or more to win the game. Run out of bullets and you lose")
-    print(f"X means a hit was successful. # means you just shot water, oh dear")
+    print(f"Hit a ship twice or more to win the game. Run out of bullets and you lose.")
+    print(f"X means a hit was successful. # means you just shot water, oh dear!")
 
     create_grid()
 
