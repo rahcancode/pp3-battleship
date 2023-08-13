@@ -16,7 +16,7 @@ Victory Condition: Uncover all ship positions before running out of bullets.
 
     Legend:
     1. "." = water or empty space
-    2. "S" = part of ship
+    2. "O" = part of ship
     3. "X" = part of ship that was hit with bullet
     4. "#" = water that was shot with bullet, a miss because it hit no ship
 """
@@ -125,7 +125,7 @@ def create_grid():
                 end_row = random_row + ship_size
             for r in range(start_row, end_row):
                 for c in range(start_col, end_col):
-                    grid[r][c] = "S"
+                    grid[r][c] = "O"
 
 
 def print_grid(game_over):
@@ -223,7 +223,7 @@ def shoot_bullet():
     if grid[row][col] == ".":
         print("You missed, no ship was shot")
     grid[row][col] = "#"
-    elif grid[row][col] == "S":
+    elif grid[row][col] == "O":
         print("You hit!", end=" ")
     grid[row][col] = "X"
     if check_for_ship_sunk(row, col):
