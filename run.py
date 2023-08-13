@@ -208,6 +208,11 @@ def check_for_game_over():
 
     game_over = num_of_ships_sunk == num_of_ships or bullets_left <= 0
 
+# Text image of a battleship
+f = open('battleship_art.txt', 'r')
+print(f.read())
+f.close()
+
 def main():
     """Main entry point of the game"""
     global game_over
@@ -219,13 +224,34 @@ def main():
         print(f"Hello, {player_name}! You have {MAX_BULLETS} bullets to take down {NUM_OF_SHIPS} ships. May the battle begin!")
 
         # Initialize game variables for a new game
-        grid = [["." for _ in range(grid_size)] for _ in range(grid_size)]
+        grid = [["." for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
         num_of_ships_sunk = 0
         bullets_left = MAX_BULLETS
         game_over = False
 
         while not game_over:
-            play_round(player_name)
+            # Print grid and game info
+            print_grid()
+            print("Number of ships remaining:", NUM_OF_SHIPS - num_of_ships_sunk)
+            print("Number of bullets left:", bullets_left)
+
+            # Shoot a bullet and update game state
+            row, col = accept_valid_bullet_placement()
+            print("\n----------------------------")
+            cell = grid[row][col]
+            if cell == ".":
+                print("You missed, no hit")
+                grid[row][col] = "#"
+            elif cell == "O":
+                print("You hit!", end=" ")
+                grid[row][col] = "X"
+                if check_for_ship_sunk(row, col):
+                    print("You sunk a battleship!")
+                    num_of_ships_sunk += 1
+                else:
+                    print("Shots fired!")
+            bullets_left -= 1
+            check_for_game_over()
 
         while True:
             restart = input(f"Do you want to play again, {player_name}? (yes/no): ").strip().lower()
