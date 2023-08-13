@@ -250,16 +250,12 @@ def main():
 
     print("-----Welcome to Battleships-----")
     username = input("Enter your username: ")  # Prompt for username
-    print(f"Hello, {username}! You have 20 bullets to take down 3 ships. May the battle begin!")
-
-    # Get valid number of ships
-    global num_of_ships
-    num_of_ships = get_valid_integer("Enter the number of ships to place (1-86): ", 1, 86)
+    print(f"Hello, {username}! You have 50 bullets to take down 8 ships. May the battle begin!")
 
     create_grid()
 
     while not game_over:
-        print_grid(game_over)  # Pass game_over to the print_grid function
+        print_grid(False)
         print("Number of ships remaining:", num_of_ships - num_of_ships_sunk)
         print("Number of bullets left:", bullets_left)
         shoot_bullet()
@@ -268,7 +264,8 @@ def main():
         check_for_game_over()
 
     print(f"Game over, {username}!")
-    print_grid(True)  # Pass True to indicate the game is over
+    print_grid(True)
 
 if __name__ == '__main__':
     main()
+
