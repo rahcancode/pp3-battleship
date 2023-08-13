@@ -25,7 +25,7 @@ Victory Condition: Uncover all ship positions before running out of bullets.
 grid = [[]]
 grid_size = 10
 num_of_ships = 5
-bullets_left = 100
+bullets_left = 30
 game_over = False
 num_of_ships_sunk = 0
 ship_positions = [[]]
@@ -244,10 +244,10 @@ def check_for_game_over():
     global game_over
 
     if num_of_ships == num_of_ships_sunk:
-        print("Congrats you won!")
+        print("Yay, you won! \(^-^)/")
         game_over = True
     elif bullets_left <= 0:
-        print("Sorry, you lose, try again next time!")
+        print("Sorry, you lose, try again next time! ¯\_(ツ)_/¯")
         game_over = True
 
 
@@ -261,7 +261,6 @@ def main():
     """Main entry point of the application that runs the game loop."""
     global game_over
     global username
-
 
     print("-----Welcome to Battleships-----")
     username = input("Enter your username: ")
