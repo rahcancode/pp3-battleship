@@ -1,5 +1,8 @@
 import random
 import time
+# Global variable for the player's username
+username = ""
+
 
 """
     Battleships Game Overview:
@@ -121,15 +124,15 @@ def create_grid():
 
 
 
-def print_grid():
-    """Will print the grid with rows A-J and columns 0-9, only revealing hits and misses"""
+def print_grid(game_over):
+    """Will print the grid with rows A-J and columns 0-9, revealing hits, misses, and ships if the game is over"""
     global grid
     global alphabet
 
     for row in range(len(grid)):
         print(alphabet[row], end=") ")
         for col in range(len(grid[row])):
-            if grid[row][col] == "X" or grid[row][col] == "#":
+            if game_over or grid[row][col] == "X" or grid[row][col] == "#" or grid[row][col] == "O":
                 print(grid[row][col], end=" ")
             else:
                 print(".", end=" ")
@@ -139,6 +142,7 @@ def print_grid():
     for i in range(len(grid[0])):
         print(str(i), end=" ")
     print("")
+
 
 
 
@@ -233,21 +237,25 @@ def check_for_game_over():
 def main():
     """Main entry point of application that runs the game loop"""
     global game_over
+    global username
 
     print("-----Welcome to Battleships-----")
-    print("You have 15 bullets to take down 2 ships, may the battle begin!")
+    username = input("Enter your username: ")  # Prompt for username
+    print(f"Hello, {username}! You have 50 bullets to take down 8 ships. May the battle begin!")
 
     create_grid()
 
-    while game_over is False:
-        print_grid()
-        print("Number of ships remaining: " + str(num_of_ships - num_of_ships_sunk))
-        print("Number of bullets left: " + str(bullets_left))
+    while not game_over:
+        print_grid(False)
+        print("Number of ships remaining:", num_of_ships - num_of_ships_sunk)
+        print("Number of bullets left:", bullets_left)
         shoot_bullet()
         print("----------------------------")
         print("")
         check_for_game_over()
 
+    print(f"Game over, {username}!")
+    print_grid(True)
 
 if __name__ == '__main__':
     main()
