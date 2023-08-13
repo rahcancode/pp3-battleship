@@ -243,7 +243,7 @@ def shoot_bullet():
 
 def check_for_game_over():
     """Check if the game is over based on the conditions:
-        The player has sunk at least one ship or has run out of bullets."""
+        The player has hit a ship two or more times or has run out of bullets."""
     global num_of_ships_sunk
     global bullets_left
     global game_over
@@ -264,7 +264,6 @@ f.close()
 
 def main():
     """Main entry point of the application that runs the game loop."""
-    global game_over
     global username
 
     print("-----Welcome to Battleships-----")
@@ -273,27 +272,43 @@ def main():
     while not username:
         username = input("Enter your username: ").strip()
 
-    print(f"Hello, {username}! You have {bullets_left} bullets to take down {num_of_ships} ships.")
-    print(f"Hit a ship twice or more to win the game. Run out of bullets and you lose.")
-    print(f"X means a hit was successful. # means you just shot water, oh dear!")
+    play_again = True
 
-    create_grid()
+    while play_again:
+        global grid
+        global grid_size
+        global num_of_ships
+        global bullets_left
+        global game_over
+        global num_of_ships_sunk
+        global ship_positions
 
-    while not game_over:
-        print_grid(False)
-        print("Number of ships remaining:", num_of_ships - num_of_ships_sunk)
-        print("Number of bullets left:", bullets_left)
+        grid = [[]]
+        bullets_left = 30
+        game_over = False
+        num_of_ships_sunk = 0
+        ship_positions = [[]]
 
-        shoot_bullet()
+        print(f"Hello, {username}! You have {bullets_left} bullets to take down {num_of_ships} ships.")
 
-        print("====================")
-        print("")
+        create_grid()
 
-        check_for_game_over()
+        while not game_over:
+            print_grid(False)
+            print("Number of ships remaining:", num_of_ships - num_of_ships_sunk)
+            print("Number of bullets left:", bullets_left)
 
-    print(f"Game over X_x, {username}!")
-    print_grid(True)
+            shoot_bullet()
 
+            print("====================")
+            print("")
+
+            check_for_game_over()
+
+        print(f"Game over X_x, {username}!")
+        print_grid(True)
+
+        play_again = input("Do you want to play again? (yes/no): ").strip().lower() == "yes"
 
 if __name__ == '__main__':
     main()
