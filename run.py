@@ -217,7 +217,7 @@ def main():
     while True:
         print(f"Hello, {player_name}! You have {MAX_BULLETS} bullets to take down {NUM_OF_SHIPS} ships. May the battle begin!")
 
-        initialize_game()
+        # initialize_game()
 
         while not game_over:
             play_round(player_name)
