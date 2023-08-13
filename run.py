@@ -242,14 +242,17 @@ def shoot_bullet():
 
 def check_for_game_over():
     """Check if the game is over based on the conditions:
-        The player has hit at least one ship two or more times."""
+        At least one ship has been hit two or more times."""
     global num_of_ships_sunk
     global game_over
 
-    if num_of_ships_sunk >= 1:
-        print("Yay, you won by sinking a ship! \(^-^)/")
-        game_over = True
-    elif bullets_left <= 0:
+    for position in ship_positions:
+        if check_for_ship_sunk(position[0], position[2]):
+            print("Yay, you won by sinking a ship! \(^-^)/")
+            game_over = True
+            return
+
+    if bullets_left <= 0:
         print("Sorry, you lose, try again next time! ¯\_(ツ)_/¯")
         game_over = True
 
