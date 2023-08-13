@@ -130,6 +130,42 @@ def print_grid():
                 print(cell, end=" ")
         print("\n")
 
+# Function to get valid row and column for bullet placement
+def accept_valid_bullet_placement():
+    """Will get valid row and column to place bullet shot"""
+    global alphabet
+    global grid
+
+    is_valid_placement = False
+    row = -1
+    col = -1
+    while is_valid_placement is False:
+        placement = input("Enter row (A-J) and column (0-9) such as A3: ")
+        placement = placement.upper()
+        if len(placement) <= 0 or len(placement) > 2:
+            print("Error: Please enter only one row and column such as A3")
+            continue
+        row = placement[0]
+        col = placement[1]
+        if not row.isalpha() or not col.isnumeric():
+            print("Error: Please enter letter (A-J) for row and (0-9) for column")
+            continue
+        row = alphabet.find(row)
+        if not (-1 < row < grid_size):
+            print("Error: Please enter letter (A-J) for row and (0-9) for column")
+            continue
+        col = int(col)
+        if not (-1 < col < grid_size):
+            print("Error: Please enter letter (A-J) for row and (0-9) for column")
+            continue
+        if grid[row][col] == "#" or grid[row][col] == "X":
+            print("You have already shot a bullet here, pick somewhere else")
+            continue
+        if grid[row][col] == "." or grid[row][col] == "O":
+            is_valid_placement = True
+
+    return row, col
+
 def check_for_ship_sunk(row, col):
     """Check if a ship has been sunk"""
     global ship_positions
@@ -172,13 +208,14 @@ def check_for_game_over():
     global num_of_ships_sunk
     global bullets_left
     global game_over
-
     if num_of_ships_sunk == num_of_ships:
         print("Gratz, you won!")
     elif bullets_left <= 0:
         print("Sorry, you lost! Try again next time?")
 
     game_over = num_of_ships_sunk == num_of_ships or bullets_left <= 0
+
+
 
 # Text image of a battleship
 f = open('battleship_art.txt', 'r')
@@ -235,43 +272,6 @@ def main():
                 return
             else:
                 print("Invalid input. Please enter 'yes' or 'no'.")
-
-# Function to get valid row and column for bullet placement
-def accept_valid_bullet_placement():
-    """Will get valid row and column to place bullet shot"""
-    global alphabet
-    global grid
-
-    is_valid_placement = False
-    row = -1
-    col = -1
-    while is_valid_placement is False:
-        placement = input("Enter row (A-J) and column (0-9) such as A3: ")
-        placement = placement.upper()
-        if len(placement) <= 0 or len(placement) > 2:
-            print("Error: Please enter only one row and column such as A3")
-            continue
-        row = placement[0]
-        col = placement[1]
-        if not row.isalpha() or not col.isnumeric():
-            print("Error: Please enter letter (A-J) for row and (0-9) for column")
-            continue
-        row = alphabet.find(row)
-        if not (-1 < row < grid_size):
-            print("Error: Please enter letter (A-J) for row and (0-9) for column")
-            continue
-        col = int(col)
-        if not (-1 < col < grid_size):
-            print("Error: Please enter letter (A-J) for row and (0-9) for column")
-            continue
-        if grid[row][col] == "#" or grid[row][col] == "X":
-            print("You have already shot a bullet here, pick somewhere else")
-            continue
-        if grid[row][col] == "." or grid[row][col] == "O":
-            is_valid_placement = True
-
-    return row, col
-
 
 # Call the main function
 if __name__ == "__main__":
