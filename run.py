@@ -16,6 +16,9 @@ import time
     3. "X" = part of ship that was hit with bullet
     4. "#" = a miss, only water was shot
 """
+import random
+import time
+
 GRID_SIZE = 10
 NUM_OF_SHIPS = 6
 MAX_BULLETS = 30
@@ -30,6 +33,36 @@ def validate_grid_and_place_ship(grid, ship_positions, start_row, end_row, start
             for c in range(start_col, end_col):
                 grid[r][c] = "O"
     return all_valid
+
+# ... (functions)
+
+def main():
+    """Main entry point of the game"""
+    print("-----Welcome to Battleships-----")
+    print("You have {} bullets to take down {} ships. May the battle begin!".format(MAX_BULLETS, NUM_OF_SHIPS))
+
+    grid = create_grid()
+    ship_positions = []
+
+    while True:
+        print_grid(grid)
+        print("Number of ships remaining:", NUM_OF_SHIPS - num_of_ships_sunk)
+        print("Number of bullets left:", MAX_BULLETS - bullets_left)
+        
+        if bullets_left <= 0:
+            print("Sorry, you lost! You ran out of bullets. Better luck next time!")
+            break
+
+        if num_of_ships_sunk == NUM_OF_SHIPS:
+            print("Congrats, you won!")
+            break
+
+        shoot_bullet(grid, ship_positions)
+        print("----------------------------")
+        print("")
+
+if __name__ == '__main__':
+    main()
 
 # Text image of a battleship
 f = open('battleship_art.txt', 'r')
