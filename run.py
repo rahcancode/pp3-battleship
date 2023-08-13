@@ -221,7 +221,7 @@ def shoot_bullet():
 
     row, col = accept_valid_bullet_placement()
     print("")
-    print("####################")
+    print("====================")
 
     if grid[row][col] == ".":
         print("You missed, no ship was shot")
@@ -243,14 +243,13 @@ def shoot_bullet():
 
 def check_for_game_over():
     """Check if the game is over based on the conditions:
-        All ships have been sunk or the player has run out of bullets."""
+        The player has sunk at least one ship or has run out of bullets."""
     global num_of_ships_sunk
-    global num_of_ships
     global bullets_left
     global game_over
 
-    if num_of_ships == num_of_ships_sunk:
-        print("Yay, you won! \(^-^)/")
+    if num_of_ships_sunk >= 1:
+        print("Yay, you won by sinking a ship! \(^-^)/")
         game_over = True
     elif bullets_left <= 0:
         print("Sorry, you lose, try again next time! ¯\_(ツ)_/¯")
@@ -285,7 +284,7 @@ def main():
 
         shoot_bullet()
 
-        print("####################")
+        print("====================")
         print("")
 
         check_for_game_over()
