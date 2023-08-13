@@ -111,7 +111,7 @@ def create_grid():
 
     num_of_ships_placed = 0  # Initialize the variable
 
-    ship_positions = []
+    ship_positions = [[]]
 
     while num_of_ships_placed != num_of_ships:
         random_row = random.randint(0, rows - 1)
