@@ -97,13 +97,13 @@ def create_grid():
 
     random.seed(time.time())
 
-    grid = [["." for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
+    grid = [["." for _ in range(grid_size)] for _ in range(grid_size)]
 
     ship_positions = []
 
     while len(ship_positions) != num_of_ships:
-        random_row = random.randint(0, GRID_SIZE - 1)
-        random_col = random.randint(0, GRID_SIZE - 1)
+        random_row = random.randint(0, grid_size - 1)
+        random_col = random.randint(0, grid_size - 1)
         direction = random.choice(["left", "right", "up", "down"])
         ship_size = random.randint(3, 5)
         if try_to_place_ship_on_grid(random_row, random_col, direction, ship_size):
@@ -231,18 +231,17 @@ def main():
     player_name = input("Enter your name: ").strip()
 
     while True:
-        print(f"Hello, {player_name}! You have {MAX_BULLETS} bullets to take down {NUM_OF_SHIPS} ships. May the battle begin!")
+        print(f"Hello, {player_name}! You have {bullets_left} bullets to take down {num_of_ships} ships. May the battle begin!")
 
         # Initialize game variables for a new game
-        grid = [["." for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
+        grid = [["." for _ in range(grid_size)] for _ in range(grid_size)]
         num_of_ships_sunk = 0
-        bullets_left = MAX_BULLETS
         game_over = False
 
         while not game_over:
             # Print grid and game info
             print_grid()
-            print("Number of ships remaining:", NUM_OF_SHIPS - num_of_ships_sunk)
+            print("Number of ships remaining:", num_of_ships - num_of_ships_sunk)
             print("Number of bullets left:", bullets_left)
 
             # Shoot a bullet and update game state
