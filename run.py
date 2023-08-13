@@ -200,13 +200,16 @@ def check_for_ship_sunk(row, col):
         end_row = position[1]
         start_col = position[2]
         end_col = position[3]
+        ship_id = position
 
         if start_row <= row <= end_row and start_col <= col <= end_col:
             for r in range(start_row, end_row):
                 for c in range(start_col, end_col):
                     if grid[r][c] != "X":
                         return False
-    return True
+            return ship_id
+
+    return None
 
 
 def shoot_bullet():
@@ -226,11 +229,14 @@ def shoot_bullet():
     elif grid[row][col] == "O":
         print("You hit!", end=" ")
         grid[row][col] = "X"
-        if check_for_ship_sunk(row, col):
-            print("A ship was completely sunk!")
-            num_of_ships_sunk += 1
-        else:
-            print("A ship was shot")
+        ship_sunk = check_for_ship_sunk(row, col)
+        if ship_sunk is not None:
+            print("A ship was partially sunk!")
+            ship_positions.remove(ship_sunk)
+    elif grid[row][col] == "X":
+        print("You hit the same spot again!")
+    else:
+        print("You have already shot a bullet here. Choose again.")
 
     bullets_left -= 1
 
@@ -265,6 +271,9 @@ def main():
     print("-----Welcome to Battleships-----")
     username = input("Enter your username: ")
 
+    while not username:
+        username = input("Enter your username: ").strip()
+    
     print(f"Hello, {username}! You have {bullets_left} bullets to take down {num_of_ships} ships.")
 
     create_grid()
