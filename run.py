@@ -221,7 +221,7 @@ def shoot_bullet():
 
     row, col = accept_valid_bullet_placement()
     print("")
-    print("----------------------------")
+    print("####################")
 
     if grid[row][col] == ".":
         print("You missed, no ship was shot")
@@ -230,9 +230,9 @@ def shoot_bullet():
         print("You hit!", end=" ")
         grid[row][col] = "X"
         ship_sunk = check_for_ship_sunk(row, col)
-        if ship_sunk is not None:
-            print("A ship was partially sunk!")
-            ship_positions.remove(ship_sunk)
+        if ship_sunk:
+            print("A ship was completely sunk!")
+            num_of_ships_sunk += 1
     elif grid[row][col] == "X":
         print("You hit the same spot again!")
     else:
@@ -285,7 +285,7 @@ def main():
 
         shoot_bullet()
 
-        print("----------------------------")
+        print("####################")
         print("")
 
         check_for_game_over()
