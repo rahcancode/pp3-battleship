@@ -24,11 +24,11 @@ Battleships Game Overview:
 - Ship Orientation: Ships don't place diagonally; a hit extends up, down, left, or right.
 - Victory Condition: Sink at least 1 of 5 ships before running out of bullets.
 
-    Legend:
-    "." = water or empty space.
-    "O" = part of a ship.
-    "X" = part of a ship that was hit with a bullet.
-    "#" = water that was shot with a bullet, a miss because it hit no ship.
+        Legend:
+        "." = water or empty space.
+        "O" = part of a ship.
+        "X" = part of a ship that was hit with a bullet.
+        "#" = water that was shot with a bullet, a miss because it hit no ship.
 
 # Features
 ## Existing Features
@@ -85,11 +85,11 @@ User testing:
 ## Solved Bugs
 
 During testing, the grid automatically displayed the location of the boats from the beginning, which negated the purpose of the game. 
-- I added a print_grid(game_over) function to hide the positions of the boats until the game is won or lost.
+- I added a `print_grid(game_over)` function to hide the positions of the boats until the game is won or lost.
 
 During testing, I discovered that the terminal wasn't correctly printing the location of the boats when hit. 
 - The bullet counter would decrease, and the "bullet already shot" error would print if the same input was used again, but the terminal would not change a "." to an "X" to show a boat was hit.
-- I discovered the code was not correctly displaying the ship ("O") when it was hit in the print_grid() function because the value was incorrect, and it was defaulting to ".".
+- I discovered the code was not correctly displaying the ship ("O") when it was hit in the `print_grid()` function because the value was incorrect, and it was defaulting to ".".
 
 ## Remaining Bugs
 
@@ -108,8 +108,8 @@ This project was deployed using the mock terminal in Heroku, created by Code Ins
 To deploy:
 - Fork/clone the repository.
 - Create a new Heroku app.
-- In Settings: Config Vars should be Port with a value of 8000.
-- In Settings: Buildpacks should be Python, then NodeJS (in that order only).
+- In Settings: Config Vars should be `Port` with a value of `8000`.
+- In Settings: Buildpacks should be `Python`, then `NodeJS` (in that order only).
 - In Deploy: Link the GitHub repo to Heroku.
 - Press Deploy Branch.
 
