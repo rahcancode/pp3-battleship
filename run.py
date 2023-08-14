@@ -31,6 +31,8 @@ num_of_ships_sunk = 0
 ship_positions = [[]]
 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
+# Ship Placement and Validation
+
 
 def validate_grid_and_place_ship(start_row, end_row, start_col, end_col):
     """Checks if it is safe to place a ship in
@@ -87,6 +89,9 @@ def is_valid_ship_placement(row, col, direction, length):
 
     return True
 
+# Game Setup and Initialization
+
+
 def create_grid():
     """Create a 10x10 grid and randomly place ships
     of varying sizes and directions."""
@@ -109,11 +114,14 @@ def create_grid():
         random_col = random.randint(0, cols - 1)
         direction = random.choice(["left", "right", "up", "down"])
         ship_size = random.randint(3, 5)
-        if is_valid_ship_placement(random_row, random_col, direction, ship_size):
+        if is_valid_ship_placement(
+            random_row, random_col, direction, ship_size
+                ):
             num_of_ships_placed += 1
 
             # Calculate start and end positions
-            start_row, end_row, start_col, end_col = random_row, random_row + 1, random_col, random_col + 1
+            start_row, end_row, start_col, end_col = \
+                random_row, random_row + 1, random_col, random_col + 1
             if direction == "left":
                 start_col = random_col - ship_size + 1
             elif direction == "right":
@@ -161,7 +169,9 @@ def get_valid_integer(prompt, min_value, max_value):
             if min_value <= value <= max_value:
                 return value
             else:
-                print(f"Please enter a value between {min_value} and {max_value}.")
+                print(
+                    f"Please enter a value between {min_value} and {max_value}"
+                    )
         except ValueError:
             print("Invalid input. Please enter a valid integer.")
 
@@ -175,15 +185,20 @@ def accept_valid_bullet_placement():
         placement = input("Enter row (A-J) and column (0-9) such as C4: ")
         placement = placement.upper()
 
-        if len(placement) != 2 or placement[0] not in alphabet or not placement[1].isdigit():
-            print("Invalid input. Please enter a valid row (A-J) and column (0-9).")
+        if len(placement)
+        != 2 or placement[0] not in alphabet or not placement[1].isdigit():
+            print(
+                "Invalid input.Please enter a valid row (A-J) and column (0-9)"
+                )
             continue
 
         row = alphabet.index(placement[0])
         col = int(placement[1])
 
         if not (0 <= row < grid_size) or not (0 <= col < grid_size):
-            print("Invalid input. Row and column values must be between A-J and 0-9.")
+            print(
+                "Invalid input.Row & column values must be between A-J and 0-9"
+                )
             continue
 
         if grid[row][col] == "#" or grid[row][col] == "X":
@@ -214,6 +229,8 @@ def check_for_ship_sunk(row, col):
 
     return False
 
+
+# Gameplay and Bullet Shooting
 
 def shoot_bullet():
     """Simulate shooting a bullet at a specified location on the grid,
@@ -255,19 +272,22 @@ def check_for_game_over():
 
     for position in ship_positions:
         if check_for_ship_sunk(position[0], position[2]):
-            print("Yay, you won by sinking a ship! \(^-^)/")
+            print("Yay, you won by sinking a ship!")
             game_over = True
             return
 
     if bullets_left <= 0:
-        print("Sorry, you lose, try again next time! ¯\_(ツ)_/¯")
+        print("Sorry, you lose, try again next time!")
         game_over = True
 
 
 # Text image of a battleship
+
 f = open('battleship_art.txt', 'r')
 print(f.read())
 f.close()
+
+# Main Game Loop and User Interaction
 
 
 def main():
@@ -297,7 +317,10 @@ def main():
         num_of_ships_sunk = 0
         ship_positions = [[]]
 
-        print(f"Hello, {username}! You have {bullets_left} bullets to take down 1 of {num_of_ships} ships.")
+        print(
+            f"Hello, {username}! You have {bullets_left} bullets" +
+            f"to take down 1 of {num_of_ships} ships."
+            )
 
         create_grid()
 
@@ -312,10 +335,12 @@ def main():
 
             check_for_game_over()
 
-        print(f"Game over X_x, {username}!")
+        print(f"Game over, {username}!")
         print_grid(True)
 
-        play_again = input("Do you want to play again? (yes/no): ").strip().lower() == "yes"
+        play_again = input(
+            "Do you want to play again? (yes/no): "
+                ).strip().lower() == "yes"
 
 
 if __name__ == '__main__':

@@ -10,7 +10,20 @@ Maybe some badges?
 
 ## How to play
 
-!, 2, 3
+Battleships Game Overview ¸.·´¯`·.´¯`·.¸¸.·´¯`·.¸><(((º>
+
+Grid Setup: A 10x10 grid holds 5 ships of varying lengths, placed randomly.
+Ammunition: Use 25 bullets to target and destroy ships on the grid.
+Shooting: Choose a grid location (e.g., C4) to fire a bullet.
+Outcome Display: Shots' outcomes (hit or miss) are shown on the grid.
+Ship Orientation: Ships don't place diagonally; a hit extends in 4 directions.
+Victory Condition: Uncover all ship positions before running out of bullets.
+
+    Legend:
+    1. "." = water or empty space
+    2. "O" = part of ship
+    3. "X" = part of ship that was hit with bullet
+    4. "#" = water that was shot with bullet, a miss because it hit no ship
 
 ## Features
 
