@@ -2,7 +2,7 @@
 
 What is it? Why I chose it?
 
-Here is a live version of my project
+Here is a live version of my project: https://pp3-battleship-august2023-9cb0d7252a27.herokuapp.com/
 
 Insert image here
 
@@ -36,5 +36,5 @@ User testing (no boats)
 
 https://asciiart.website/index.php?art=transportation/nautical for ascii image of submarine and fish
 https://patorjk.com/software/taag/#p=display&f=Digital&t=Battleships for ascii text Battleships
-PEP8 validator
+https://pep8ci.herokuapp.com/# PEP8 validator
 
