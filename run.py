@@ -87,6 +87,7 @@ def is_valid_ship_placement(row, col, direction, length):
 
     return True
 
+ ship_positions = []
 
 def create_grid():
     """Create a 10x10 grid and randomly place ships
@@ -103,7 +104,7 @@ def create_grid():
     grid = [["." for _ in range(cols)] for _ in range(rows)]
 
     num_of_ships_placed = 0
-    ship_positions = [[]]
+    # ship_positions = []
 
     while num_of_ships_placed != num_of_ships:
         random_row = random.randint(0, rows - 1)
@@ -217,6 +218,7 @@ def shoot_bullet():
     global grid
     global num_of_ships_sunk
     global bullets_left
+    global game_over
 
     bullets_left -= 1
 
@@ -230,13 +232,16 @@ def shoot_bullet():
     elif grid[row][col] == "O":
         print("You got a hit!")
         grid[row][col] = "X"
-        check_for_game_over()
+        if check_for_ship_sunk(row, col):
+            num_of_ships_sunk += 1
+            print("A ship was completely sunk!")
+            if num_of_ships_sunk == num_of_ships:
+                print("Congratulations! You've sunk all the ships!")
+                game_over = True
     elif grid[row][col] == "X":
         print("You hit the same spot again!")
     else:
         print("You have already shot a bullet here. Choose again.")
-
-    
 
 
 def check_for_game_over():
