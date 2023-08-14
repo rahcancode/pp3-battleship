@@ -1,7 +1,9 @@
 # Battleships
 
 This is a simple Python terminal game, run in a mock terminal provided by Code Institute in Heroku.
+
 The aim of the game is to hit one of five ships that are positioned randomly in a 10x10 grid, using 25 bullets or less.
+
 You can find more information about the game of Battleships on its [Wikipedia page - Battleship (game)](https://en.wikipedia.org/wiki/Battleship_(game)).
 
 [Here is a live version of my project on Heroku](https://pp3-battleship-august2023-9cb0d7252a27.herokuapp.com)
@@ -15,17 +17,27 @@ You can find more information about the game of Battleships on its [Wikipedia pa
 Battleships Game Overview
 
 Username: Enter a username to start the game.
+
 Grid Setup: A 10x10 grid holds 5 ships of varying lengths, placed randomly.
+
 Ammunition: Use 25 bullets to target and destroy ships on the grid.
+
 Shooting: Choose a grid location (e.g., C4) to fire a bullet.
+
 Outcome Display: Shots' outcomes (hit or miss) are shown on the grid.
+
 Ship Orientation: Ships don't place diagonally; a hit extends up, down, left or right.
+
 Victory Condition: Sink at least 1 of 5 ships before running out of bullets.
 
 Legend:
+
 "." = water or empty space.
+
 "O" = part of ship.
+
 "X" = part of ship that was hit with bullet.
+
 "#" = water that was shot with bullet, a miss because it hit no ship.
 
 # Features
@@ -74,7 +86,7 @@ I have manually tested this project by completing the following:
 
 The code was run through the [CI Python Linter using PEP8](https://pep8ci.herokuapp.com/#) and no errors were found at the time of the last commit.
 
-- User testing:
+User testing:
 - I have tried to start the game by pressing return instead of entering a value for a username, and the username prompt repeats (see image above)
 - I have tried entering invalid values outside of the requested "row (A-J) and column (0-9)" and the correct error message appears (see images above)
 
