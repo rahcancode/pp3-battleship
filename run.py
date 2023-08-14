@@ -231,7 +231,6 @@ def shoot_bullet():
         print("You got a hit!")
         grid[row][col] = "X"
         check_for_game_over()
-            print("A ship was completely sunk!")
     elif grid[row][col] == "X":
         print("You hit the same spot again!")
     else:
