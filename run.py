@@ -200,16 +200,15 @@ def check_for_ship_sunk(row, col):
         end_row = position[1]
         start_col = position[2]
         end_col = position[3]
-        ship_id = position
 
         if start_row <= row <= end_row and start_col <= col <= end_col:
             for r in range(start_row, end_row):
                 for c in range(start_col, end_col):
                     if grid[r][c] != "X":
                         return False
-            return ship_id
+            return True
 
-    return None
+    return False
 
 
 def shoot_bullet():
@@ -229,10 +228,9 @@ def shoot_bullet():
     elif grid[row][col] == "O":
         print("You got a hit!")
         grid[row][col] = "X"
-        ship_sunk = check_for_ship_sunk(row, col)
-        if ship_sunk:
-            print("A ship was completely sunk!")
+        if check_for_ship_sunk(row, col):
             num_of_ships_sunk += 1
+            print("A ship was completely sunk!")
     elif grid[row][col] == "X":
         print("You hit the same spot again!")
     else:
