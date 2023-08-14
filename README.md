@@ -4,7 +4,7 @@ What is it? Why I chose it?
 
 Here is a live version of my project: https://pp3-battleship-august2023-9cb0d7252a27.herokuapp.com/
 
-Insert image here
+![Responsive Image](https://github.com/rahcancode/pp3-coffeeloversonly/blob/main/media/responsive.JPG)
 
 Maybe some badges?
 
@@ -17,7 +17,7 @@ Ammunition: Use 25 bullets to target and destroy ships on the grid.
 Shooting: Choose a grid location (e.g., C4) to fire a bullet.
 Outcome Display: Shots' outcomes (hit or miss) are shown on the grid.
 Ship Orientation: Ships don't place diagonally; a hit extends in 4 directions.
-Victory Condition: Uncover all ship positions before running out of bullets.
+Victory Condition: Sink at least 1 of 5 ships before running out of bullets.
 
     Legend:
     1. "." = water or empty space
