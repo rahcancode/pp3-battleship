@@ -103,7 +103,7 @@ def create_grid():
     grid = [["." for _ in range(cols)] for _ in range(rows)]
 
     num_of_ships_placed = 0
-    ship_positions = []
+    ship_positions = [[]]
 
     while num_of_ships_placed != num_of_ships:
         random_row = random.randint(0, rows - 1)
