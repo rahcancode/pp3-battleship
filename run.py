@@ -87,7 +87,9 @@ def is_valid_ship_placement(row, col, direction, length):
 
     return True
 
- ship_positions = []
+
+ship_positions = []
+
 
 def create_grid():
     """Create a 10x10 grid and randomly place ships
