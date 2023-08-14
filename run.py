@@ -295,7 +295,6 @@ def main():
 
         while not game_over:
             print_grid(False)
-            print("Number of ships remaining:", num_of_ships - num_of_ships_sunk)
             print("Number of bullets left:", bullets_left)
 
             shoot_bullet()
