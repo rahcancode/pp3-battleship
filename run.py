@@ -12,7 +12,7 @@ Ammunition: Use 25 bullets to target and destroy ships on the grid.
 Shooting: Choose a grid location (e.g., C4) to fire a bullet.
 Outcome Display: Shots' outcomes (hit or miss) are shown on the grid.
 Ship Orientation: Ships don't place diagonally; a hit extends in 4 directions.
-Victory Condition: Uncover all ship positions before running out of bullets.
+Victory Condition: Sink at least 1 of 5 ships before running out of bullets.
 
     Legend:
     1. "." = water or empty space
@@ -317,7 +317,7 @@ def main():
         ship_positions = [[]]
 
         print(
-            f"Hello, {username}! You have {bullets_left} bullets" +
+            f"Hello, {username}! You have {bullets_left} bullets " +
             f"to take down 1 of {num_of_ships} ships."
             )
 
