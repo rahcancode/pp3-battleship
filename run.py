@@ -87,6 +87,7 @@ def is_valid_ship_placement(row, col, direction, length):
 
     return True
 
+
 def create_grid():
     """Create a 10x10 grid and randomly place ships
     of varying sizes and directions."""
@@ -310,6 +311,7 @@ def main():
         print_grid(True)
 
         play_again = input("Do you want to play again? (yes/no): ").strip().lower() == "yes"
+
 
 if __name__ == '__main__':
     main()
