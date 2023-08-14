@@ -185,8 +185,7 @@ def accept_valid_bullet_placement():
         placement = input("Enter row (A-J) and column (0-9) such as C4: ")
         placement = placement.upper()
 
-        if len(placement)
-        != 2 or placement[0] not in alphabet or not placement[1].isdigit():
+        if len(placement) != 2 or placement[0] not in alphabet or not placement[1].isdigit():
             print(
                 "Invalid input.Please enter a valid row (A-J) and column (0-9)"
                 )
