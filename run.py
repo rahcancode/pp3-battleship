@@ -87,10 +87,6 @@ def is_valid_ship_placement(row, col, direction, length):
 
     return True
 
-
-ship_positions = []
-
-
 def create_grid():
     """Create a 10x10 grid and randomly place ships
     of varying sizes and directions."""
@@ -106,7 +102,7 @@ def create_grid():
     grid = [["." for _ in range(cols)] for _ in range(rows)]
 
     num_of_ships_placed = 0
-    # ship_positions = []
+    ship_positions = []  # Initialize ship_positions
 
     while num_of_ships_placed != num_of_ships:
         random_row = random.randint(0, rows - 1)
@@ -116,7 +112,7 @@ def create_grid():
         if is_valid_ship_placement(random_row, random_col, direction, ship_size):
             num_of_ships_placed += 1
 
-            # Place the ship on the grid
+            # Calculate start and end positions
             start_row, end_row, start_col, end_col = random_row, random_row + 1, random_col, random_col + 1
             if direction == "left":
                 start_col = random_col - ship_size + 1
@@ -126,6 +122,11 @@ def create_grid():
                 start_row = random_row - ship_size + 1
             elif direction == "down":
                 end_row = random_row + ship_size
+
+            # Store ship positions
+            ship_positions.append([start_row, end_row, start_col, end_col])
+
+            # Mark ship on the grid
             for r in range(start_row, end_row):
                 for c in range(start_col, end_col):
                     grid[r][c] = "O"
